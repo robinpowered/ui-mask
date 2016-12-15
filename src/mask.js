@@ -444,7 +444,7 @@ angular.module('ui.mask', [])
                                     if (!isValid || value.length === 0) {
                                         valueMasked = '';
                                         iElement.val('');
-                                        scope.$apply(function() {
+                                        scope.$applyAsync(function() {
                                             //only $setViewValue when not $pristine to avoid changing $pristine state.
                                             if (!controller.$pristine) {
                                                 controller.$setViewValue('');
@@ -597,7 +597,7 @@ angular.module('ui.mask', [])
                                     iElement.val(maskPlaceholder);
                                     // This shouldn't be needed but for some reason after aggressive backspacing the controller $viewValue is incorrect.
                                     // This keeps the $viewValue updated and correct.
-                                    scope.$apply(function () {
+                                    scope.$applyAsync(function () {
                                         controller.$setViewValue(''); // $setViewValue should be run in angular context, otherwise the changes will be invisible to angular and user code.
                                     });
                                     setCaretPosition(this, caretPosOld);
@@ -640,7 +640,7 @@ angular.module('ui.mask', [])
                                 //we need this check.  What could happen if you don't have it is that you'll set the model value without the user
                                 //actually doing anything.  Meaning, things like pristine and touched will be set.
                                 if (valAltered) {
-                                    scope.$apply(function () {
+                                    scope.$applyAsync(function () {
                                         controller.$setViewValue(valMasked); // $setViewValue should be run in angular context, otherwise the changes will be invisible to angular and user code.
                                     });
                                 }

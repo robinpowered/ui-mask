@@ -28,7 +28,7 @@ describe("uiMask", function () {
     module("test");
   });
   beforeEach(inject(function ($rootScope, $compile, uiMaskConfig, $timeout) {
-    scope = $rootScope;
+    scope = $rootScope.$new(true);
     config = uiMaskConfig;
     compileElement = function(html) {
       return $compile(html)(scope);
@@ -805,11 +805,11 @@ describe("uiMask", function () {
       input.triggerHandler("blur");
       expect(scope.test.input.$invalid).toBe(false);
     });
-    
+
     it("should clear input on ctrl+z pressed", function() {
       var form  = compileElement(formHtml);
       var input = form.find("input");
-      
+
       function triggerKeyboardEvent(el, type, keyCode, ctrlKey) {
         var eventObj = document.createEvent('Events');
 
@@ -823,7 +823,7 @@ describe("uiMask", function () {
 
         el.dispatchEvent(eventObj);
       }
-      
+
       var triggerCtrlZ = function (element) {
         triggerKeyboardEvent(element[0], 'down', 90, true);
         triggerKeyboardEvent(element[0], 'up');
@@ -834,7 +834,7 @@ describe("uiMask", function () {
         evt.initEvent('input', false, true);
         element[0].dispatchEvent(evt);
       };
-      
+
       scope.$apply("mask = '99.99.9999'");
       input.val('11111111');
       triggerInput(input);
